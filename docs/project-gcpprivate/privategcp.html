@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+
+		<title>Private GCP</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/night.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>	
+					<section>
+						<h2>Private Google Cloud</h2>
+						Enabling private infrastructure on GCP.
+						<ul>
+							<li>To manage external and internal security risks. Its not easy and can be difficult.</li>
+							<li>Not all of the candy store is open, just be aware.</li>
+							<li>Enable Private Google Access, i.e. all api calls do not go over the public internet and stay within the Google network (it just does not look like it does)</li>
+						</ul>	
+					</section>
+					<section>
+							<h2>Private Dataproc</h2>
+							<p>Creating a private Dataproc cluster that has no inernet access egress or ingress</p>
+					</section>
+					<section>
+							<h2>Private GKE</h2>
+							<p>This can be very complex wil need to look at it later but lets just say it will take some iterations</p>
+					</section>
+				</section>
+	            <section>
+	            	<section>
+						<h2>Cloud DNS</h2>
+						<p>Make things simpler and protect the network</p>
+						<ol>
+							<li>Assume you have domain name that you want to be authoratative e.g myenterprise.com</li>
+							<li>You will have VPC service controls enabled at some point</li>
+							<li>Minimise custom images as much as possible, go CATTLE not PETS - GKE you cannot customise anyway
+						</ol>
+					</section>
+					<section>
+						Routing to the Google APIs
+						<ol>
+							<li>First access is Google Meta DataServer : 169.254.169.254</li>
+							<li>restricted.googleapis.com (vpc enabled apis) : 199.36.154.4/30 = (.4 .5 .6 .7)</li>
+							<li>private.googleapis.com (don't go over public inet) : 199.36.153.8/30 = (.8 .9 .10 .11)</li>
+							<li>*.gcr.io maps to restricted.googleapis.com</li>
+							<li>compute.googleapis.com : is not yet in the private set will be soon in beta</li>
+							<li>Consider the other domains *.googlecloud.com,  *.google.com, *.google-analytics.com</li>
+						</ol>
+						
+					</section>
+					<section>
+						<a href="https://cloud.google.com/vpc/docs/private-access-options">Private Google Access</a>
+						<br>
+						<img width="500" height="600" data-src="https://cloud.google.com/vpc/images/private-google-access.svg" alt="PGA"/>
+					</section>
+					<section>
+						<a href="https://cloud.google.com/vpc/docs/configure-private-google-access-hybrid">Private Google Access - On -Prem</a>
+						<br>
+						<img width="500" height="600" data-src="https://cloud.google.com/vpc/images/pga-onprem.svg" alt="PGA-ONPREM"/>
+					</section>
+				</section>
+				<section>API Enablement</section>
+			</div>
+
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
